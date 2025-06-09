@@ -4,3 +4,38 @@ venv/
 .venv/
 
 
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de logs
+*.log
+
+# Archivos generados por Jupyter o IPython
+.ipynb_checkpoints/
+
+# Configuración de VSCode
+.vscode/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de Excel temporales
+~$*.xlsx
+
+# Archivos de salida
+*.bak
+*.tmp
+
+# Carpeta de compilación o distribuciones
+build/
+dist/
+*.egg-info/
+
+# Archivos de configuración específicos del usuario
+*.swp
+*.swo
+
