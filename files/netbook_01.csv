@@ -1,0 +1,9 @@
+"id","nro_serie","modelo","marca","establecimiento_id"
+5,"127XYZ",NB1,NOBLEX,2
+6,"128XYZ",AS,ASUS,2
+7,"129XYZ",NB2,NOBLEX,3
+8,"130XYZ",HPX,HP,3
+9,"140XYZ",NB1,NOBLEX,2
+10,"141XYZ",AS,ASUS,2
+10,"141XYZ",AS,ASUS,2
+10,"141XYZ",NULL,ASUS,2
