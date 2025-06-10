@@ -13,6 +13,7 @@ class DatasetEXCEL(Dataset):
             print("EXCEL cargado.")
             if self.validar_datos():
                 self.transformar_datos()
+                self.consolidar_datos() 
                 self.mostrar_resumen()
 
 

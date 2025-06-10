@@ -14,6 +14,6 @@ excel.cargar_datos()
 
 #gurdado en base de datos
 db = DataSaver()
-db.guardar_dataframe(csv.datos, "snic")  #poner el nombre de la tabla
+# db.guardar_dataframe(csv.datos, "snic")  
 db.guardar_dataframe(excel.datos, "hechos") 
 

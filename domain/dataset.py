@@ -43,21 +43,21 @@ class Dataset(ABC):
         else:
             print("no hay datos para transformar.")
 
-    # def transformar_datos(self):
-    #     if self.datos is not None:
-    #         df = self.datos.copy()
-    #         df.columns = df.columns.str.lower().str.replace(" ", "_")
+    def consolidar_datos(self, numerico_default: float = 0.0, string_default: str = "Desconocido"):
+        if self.datos is None:
+            print("No hay datos para consolidar.")
+            return
 
-    #         for col in df.select_dtypes(include="object").columns:
-    #             df[col] = df[col].astype(str).str.strip().replace("NULL", None)
+        df = self.datos.copy()
+        df = df.drop_duplicates()
+        num_cols = df.select_dtypes(include="number").columns
+        obj_cols = df.select_dtypes(include="object").columns
 
-    #         df = df.drop_duplicates()
+        df[num_cols] = df[num_cols].fillna(numerico_default)
+        df[obj_cols] = df[obj_cols].fillna(string_default)
 
-    #         self.datos = df  # Guardamos los cambios en la propiedad datos
-    #         print("Transformaciones ejecutadas.")
-    #     else:
-    #         print("No hay datos para transformar.")
-
+        self.datos = df
+        print(f"Consolidación de datos completada.")
 
 
     def mostrar_resumen(self):

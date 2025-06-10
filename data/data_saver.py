@@ -27,6 +27,9 @@ class DataSaver:
         try:
             df.to_sql(nombre_tabla, con=self.engine, if_exists='replace', index=False)
             print(f"Datos guardados en la tabla: {nombre_tabla}")
-            
+
         except SQLAlchemyError as e:
             print(f"Error guardando datos: {e}")
+
+
+#CREATE DATABASE IF NOT EXISTS labo1;
