@@ -22,15 +22,30 @@ class Dataset(ABC):
     def cargar_datos(self):
         pass 
 
+    # def validar_datos(self):
+    #     if self.datos is None:
+    #         raise ValueError("Datos no cargados")
+        
+    #     if self.datos.isnull().sum().sum() > 0:
+    #         print("Se detectaron valores nulos.")
+    #     if self.datos.duplicated().sum() > 0:
+    #         print("Se detectaron filas duplicadas.")
+    #     return True
     def validar_datos(self):
         if self.datos is None:
             raise ValueError("Datos no cargados")
-        
+
+        errores = []
+
         if self.datos.isnull().sum().sum() > 0:
-            # cambiar por values para mostrar loe erores
-            print("Se detectaron valores nulos.")
+            errores.append("Se detectaron valores nulos.")
+
         if self.datos.duplicated().sum() > 0:
-            print("Se detectaron filas duplicadas.")
+            errores.append("Se detectaron filas duplicadas.")
+
+        if errores:
+            raise ValueError(" | ".join(errores))  
+
         return True
     
     def transformar_datos(self):
@@ -43,21 +58,32 @@ class Dataset(ABC):
         else:
             print("no hay datos para transformar.")
 
-    def consolidar_datos(self, numerico_default: float = 0.0, string_default: str = "Desconocido"):
+    def consolidar_datos(self, coordenada_default: float = -9999.0):
         if self.datos is None:
             print("No hay datos para consolidar.")
             return
 
         df = self.datos.copy()
+        duplicados = df.duplicated().sum()
         df = df.drop_duplicates()
-        num_cols = df.select_dtypes(include="number").columns
-        obj_cols = df.select_dtypes(include="object").columns
 
-        df[num_cols] = df[num_cols].fillna(numerico_default)
-        df[obj_cols] = df[obj_cols].fillna(string_default)
+        nulos_lat = 0
+        nulos_lon = 0
+
+        if 'latitud' in df.columns:
+            nulos_lat = df['latitud'].isnull().sum()
+            df['latitud'] = df['latitud'].fillna(coordenada_default)
+
+        if 'longitud' in df.columns:
+            nulos_lon = df['longitud'].isnull().sum()
+            df['longitud'] = df['longitud'].fillna(coordenada_default)
 
         self.datos = df
-        print(f"Consolidación de datos completada.")
+
+        print("Consolidación de datos completada.")
+        print(f" - Duplicados eliminados: {duplicados}")
+        print(f" - Latitud nula reemplazada: {nulos_lat}")
+        print(f" - Longitud nula reemplazada: {nulos_lon}")
 
 
     def mostrar_resumen(self):

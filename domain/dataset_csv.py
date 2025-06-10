@@ -1,5 +1,6 @@
 import pandas as pd
 from domain.dataset import Dataset
+from datetime import datetime
 
 
 class DatasetCSV(Dataset):
@@ -12,10 +13,26 @@ class DatasetCSV(Dataset):
             self.datos = df
             print("CSV cargado.")
             if self.validar_datos():
-               
+                if not self.control_fecha():
+                    return
                 self.transformar_datos()
                 self.mostrar_resumen()
 
 
         except Exception as e:
             print(f"Error cargando CSV: {e}")
+
+
+    def control_fecha(self) -> bool:
+        if self.datos is None:
+            print("Error: los datos no han sido cargados.")
+            return False
+
+        df = self.datos
+        actual = datetime.now().year
+        mask_fuera = df['anio'] > actual
+        if mask_fuera.any():
+            valores = df.loc[mask_fuera, 'anio'].unique()
+            print(f"Error: estos años son mayores al año actual ({actual}): {valores}")
+            return False
+        return True
