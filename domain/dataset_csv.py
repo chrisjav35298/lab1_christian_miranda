@@ -22,7 +22,7 @@ class DatasetCSV(Dataset):
         except Exception as e:
             print(f"Error cargando CSV: {e}")
 
-
+    #Control de fechas superior al año actual
     def control_fecha(self) -> bool:
         if self.datos is None:
             print("Error: los datos no han sido cargados.")
