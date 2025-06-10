@@ -32,22 +32,36 @@ class Dataset(ABC):
         if self.datos.duplicated().sum() > 0:
             print("Se detectaron filas duplicadas.")
         return True
-
+    
     def transformar_datos(self):
         if self.datos is not None:
-            self.__datos.columns = self.datos.columns.str.lower().str.replace(" ", "_")
-            self.__datos = self.datos.drop_duplicates()
-            # for col in self.datos.select_dtypes(include="object").columns:
-            #     self.__datos[col] = self.datos[col].astype(str).str.strip()
+            self.__datos = self.datos.drop_duplicates().copy()
+            self.__datos.columns = self.__datos.columns.str.lower().str.replace(" ", "_")
             for col in self.__datos.select_dtypes(include="object").columns:
-                self.__datos.loc[:, col] = self.__datos[col].astype(str).str.strip()
-
-            print(f"transformaciones ejecutadas.")
+                self.__datos.loc[:, col] = self.__datos[col].astype(str).str.strip().replace("NULL", None)
+            print("transformaciones ejecutadas.")
         else:
-            print(f"no hay datos para transformar.")
+            print("no hay datos para transformar.")
 
-    def mostrar_datos(self):
-        pass 
+    # def transformar_datos(self):
+    #     if self.datos is not None:
+    #         df = self.datos.copy()
+    #         df.columns = df.columns.str.lower().str.replace(" ", "_")
+
+    #         for col in df.select_dtypes(include="object").columns:
+    #             df[col] = df[col].astype(str).str.strip().replace("NULL", None)
+
+    #         df = df.drop_duplicates()
+
+    #         self.datos = df  # Guardamos los cambios en la propiedad datos
+    #         print("Transformaciones ejecutadas.")
+    #     else:
+    #         print("No hay datos para transformar.")
+
+
+
+    def mostrar_resumen(self):
+        return print(self.datos.describe(include='all') if self.datos is not None else "No hay Datos para mostrar")
 
 
 

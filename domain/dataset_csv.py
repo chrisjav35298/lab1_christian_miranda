@@ -14,6 +14,7 @@ class DatasetCSV(Dataset):
             if self.validar_datos():
                
                 self.transformar_datos()
+                self.mostrar_resumen()
 
 
         except Exception as e:

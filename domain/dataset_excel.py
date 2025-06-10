@@ -3,7 +3,7 @@ from domain.dataset import Dataset
 
 
 class DatasetEXCEL(Dataset):
-    def __init(self, fuente):
+    def __init__(self, fuente):
         super().__init__(fuente)
 
     def cargar_datos(self):
@@ -12,8 +12,8 @@ class DatasetEXCEL(Dataset):
             self.datos = df
             print("EXCEL cargado.")
             if self.validar_datos():
-                print("Datos validados.")
-                # self.transformar_datos()
+                self.transformar_datos()
+                self.mostrar_resumen()
 
 
         except Exception as e:
