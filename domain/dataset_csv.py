@@ -30,9 +30,9 @@ class DatasetCSV(Dataset):
 
         df = self.datos
         actual = datetime.now().year
-        mask_fuera = df['anio'] > actual
-        if mask_fuera.any():
-            valores = df.loc[mask_fuera, 'anio'].unique()
+        mayor_actual = df['anio'] > actual
+        if mayor_actual.any():
+            valores = df.loc[mayor_actual, 'anio'].unique()
             print(f"Error: estos años son mayores al año actual ({actual}): {valores}")
             return False
         return True
